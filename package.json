@@ -1,0 +1,32 @@
+{
+  "name": "express-book-app",
+  "version": "1.0.0",
+  "description": "An example application for Express",
+  "main": "index.js",
+  "type": "module",
+  "prisma": {
+    "seed": "node ./prisma/seed.js"
+  },
+  "scripts": {
+    "main": "nodemon src/index.js",
+    "dev": "nodemon src/index.js",
+    "seed": "prisma db push && prisma db seed",
+    "test-positive": "newman run \"./postman/collections/Bookings API.json\" -e \"./postman/environments/Local.postman_environment.json\"",
+    "test-negative": "newman run \"./postman/collections/Bookings API Negative.json\" -e \"./postman/environments/Local.postman_environment.json\"",
+    "test": "npm run test-positive && npm run test-negative"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.3.0",
+    "@sentry/node": "^6.0.0",
+    "@sentry/tracing": "^6.0.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "newman": "^6.2.1",
+    "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prisma": "^6.3.0"
+  }
+}
