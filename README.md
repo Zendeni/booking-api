@@ -47,7 +47,8 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
 ``
 npm install
 ``
-\Set Up the Database:
+\
+Set Up the Database:
 
 Initialize the database and apply migrations:
 
@@ -58,19 +59,21 @@ npx prisma migrate dev --name init
 Seed the Database:
 
 Populate the database with initial data:
+\
 ``
-npm run seed
+npx primsa migrate dev or npx db push
 ``
+
 
 Set Up Environment Variables:
 
 Create a .env file in the root directory and add the following:
 
-``
+```json
 DATABASE_URL="file:./dev.db"
 AUTH_SECRET_KEY="your-secret-key-here"
 SENTRY_DSN="your-sentry-dsn-here"
-``
+```
 Start the Server:
 ``
 npm run dev
