@@ -46,7 +46,7 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
    
    ``
     npm install
-   ``
+   ``\
 3.  **Set Up the Database**:
 
   Initialize the database and apply migrations:
