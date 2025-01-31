@@ -9,8 +9,7 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
 4. [Running the API](#running-the-api)
 5. [Testing Endpoints](#testing-endpoints)
 6. [API Documentation](#api-documentation)
-7. [Contributing](#contributing)
-8. [License](#license)
+
 
 ---
 
