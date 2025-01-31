@@ -43,33 +43,29 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
    cd booking-api
    ``
 1.  **Install Dependencies**:
-
+   
    ``
     npm install
    ``
-2.  **Set Up the Database**:
+3.  **Set Up the Database**:
 
-    -   Initialize the database and apply migrations:
-
+  Initialize the database and apply migrations:
         ``
         npx prisma migrate dev --name init
         ``
-3.  **Seed the Database**:
-
-    -   Populate the database with initial data:
+4.  **Seed the Database**:
+Populate the database with initial data:
 ```
-        npm run seed
+         npm run seed
 ```
 4.  **Set Up Environment Variables**:
 
     -   Create a `.env` file in the root directory and add the following:
-
-``json
-
+```json
         DATABASE_URL="file:./dev.db"
         AUTH_SECRET_KEY="your-secret-key-here"
         SENTRY_DSN="your-sentry-dsn-here"
-``
+```
 5.  **Start the Server**:
 
 ``
