@@ -98,6 +98,8 @@ You can test the API using **Postman** or any HTTP client like **curl** or 
 -   **Endpoint**: `POST /login`
 
 -   **Request Body**:
+
+  
 ```json
     {
       "username": "jdoe",
@@ -105,6 +107,7 @@ You can test the API using **Postman** or any HTTP client like **curl** or 
     }
 ```
 -   **Response**:
+
 ```json
 
     {
