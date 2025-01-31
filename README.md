@@ -47,6 +47,7 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
    ``
     npm install
    ``\
+   \
 3.  **Set Up the Database**:
 
   Initialize the database and apply migrations:
@@ -80,7 +81,8 @@ Running the API
 
 ``
     npm run dev
-``
+``\
+\
 2.  **Access the API**:\
     The API will be running at `http://localhost:3000`.
 
