@@ -36,7 +36,7 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
 - Prisma CLI (`npm install -g prisma`)
 
 ### Steps
-1. **Clone the Repository**:
+1. **Clone the Repository**:\n
    ``
    git clone https://github.com/your-username/booking-api.git
    cd booking-api
