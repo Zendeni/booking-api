@@ -37,13 +37,13 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
 
 ### Steps
 1. **Clone the Repository**:
-   ``bash
+   ``
    git clone https://github.com/your-username/booking-api.git
    cd booking-api
    ``
 ### Install Dependencies:
 
-``bash
+``
 Copy
 npm install
 ``
@@ -51,28 +51,28 @@ Set Up the Database:
 
 Initialize the database and apply migrations:
 
-``bash
+``
 Copy
 npx prisma migrate dev --name init
 ``
 Seed the Database:
 
 Populate the database with initial data:
-
-bash
-Copy
+``
 npm run seed
+``
+
 Set Up Environment Variables:
 
 Create a .env file in the root directory and add the following:
 
-``bash
+``
 DATABASE_URL="file:./dev.db"
 AUTH_SECRET_KEY="your-secret-key-here"
 SENTRY_DSN="your-sentry-dsn-here"
 ``
 Start the Server:
-``bash
+``
 npm run dev
 ``
 
@@ -88,7 +88,7 @@ Endpoint: POST /login
 
 Request Body:
 
-``json
+``
 {
   "username": "jdoe",
   "password": "password123"
@@ -96,7 +96,7 @@ Request Body:
 ``
 Response:
 
-``json
+``
 {
   "token": "your-jwt-token-here"
 }
@@ -106,14 +106,14 @@ Endpoint: GET /properties
 
 Headers:
 
-``json
+``
 {
   "Authorization": "Bearer your-jwt-token-here"
 }
 ``
 Response:
 
-``json
+``
 [
   {
     "id": "g9012345-67ef-0123-4567-89abcdef0123",
@@ -135,13 +135,13 @@ Endpoint: POST /bookings
 
 Headers:
 
-``json
+``
 {
   "Authorization": "Bearer your-jwt-token-here"
 }
 ``
 Request Body:
-``json
+``
 {
   "userId": "a1234567-89ab-cdef-0123-456789abcdef",
   "propertyId": "g9012345-67ef-0123-4567-89abcdef0123",
@@ -153,7 +153,7 @@ Request Body:
 }
 ``
 Response:
-``json
+``
 {
   "id": "f0123456-78ab-cdef-0123-456789abcdef",
   "userId": "a1234567-89ab-cdef-0123-456789abcdef",
