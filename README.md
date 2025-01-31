@@ -37,6 +37,7 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
 
 ### Steps
 1. **Clone the Repository**:\
+\
    ``
    git clone https://github.com/your-username/booking-api.git
    cd booking-api
@@ -44,10 +45,9 @@ This is a REST API for managing bookings, properties, hosts, users, amenities, a
 ### Install Dependencies:
 
 ``
-Copy
 npm install
 ``
-Set Up the Database:
+\Set Up the Database:
 
 Initialize the database and apply migrations:
 
