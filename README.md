@@ -119,12 +119,14 @@ You can test the API using **Postman** or any HTTP client like **curl** or 
 -   **Endpoint**: `GET /properties`
 
 -   **Headers**:
+
 ```json
     {
       "Authorization": "Bearer your-jwt-token-here"
     }
-
+```
 -   **Response**:
+  
 ```json
     [
       {
