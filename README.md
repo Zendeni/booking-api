@@ -66,12 +66,7 @@ Populate the database with initial data:
         AUTH_SECRET_KEY="your-secret-key-here"
         SENTRY_DSN="your-sentry-dsn-here"
 ```
-5.  **Start the Server**:
 
-``
-    npm run dev
-``
-* * * * *
 
 Running the API
 ---------------
