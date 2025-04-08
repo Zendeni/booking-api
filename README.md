@@ -1,182 +1,67 @@
-# Booking API
+🏡 Booking API
+A RESTful backend API for a property booking platform. Built with Node.js, Express, Prisma, and SQLite, featuring full CRUD, JWT authentication, query filtering, and Sentry-powered error tracking.
+🚀 Features
+•	🔐 JWT Authentication
+•	🧾 CRUD for Users, Hosts, Properties, Bookings, Reviews, Amenities
+•	🔍 Query filtering via query parameters
+•	✅ Status codes & validation
+•	📦 Seeded data using JSON files
+•	⚠️ Global error handling with Sentry
+📁 Project Structure
+src/
+├── controllers/         # Business logic layer
+├── middleware/          # Auth and error handling
+├── prisma/              # Prisma schema + client
+├── routes/              # Express routes
+├── services/            # Prisma DB interactions
+├── data/                # Seed data (JSON)
+└── index.js             # Entry point
 
-This is a REST API for managing bookings, properties, hosts, users, amenities, and reviews. It is built using **Express.js**, **Prisma**, and **SQLite**.
+🔧 Tech Stack
+•	Node.js
+•	Express
+•	Prisma ORM
+•	SQLite (dev DB)
+•	JWT (auth)
+•	Sentry (error tracking)
+•	Postman (for API testing)
+✅ Setup & Run
+1. Install dependencies
+npm install
+2. Configure environment variables
+Create a `.env` file:
+DATABASE_URL="file:./dev.db"
+JWT_SECRET=supersecretkey
+SENTRY_DSN=https://your-project.sentry.io/123456
 
-## Table of Contents
-1. [Features](#features)
-2. [Setup Instructions](#setup-instructions)
-3. [Environment Variables](#environment-variables)
-4. [Running the API](#running-the-api)
-5. [Testing Endpoints](#testing-endpoints)
-6. [API Documentation](#api-documentation)
+3. Run Prisma migrations
+npx prisma migrate dev --name init --schema=src/prisma/schema.prisma
+4. Seed the database
+npm run seed
+5. Start the server
+node src/index.js
+🔐 Authentication
+1. Login
+POST /login
+Returns a JWT token if credentials match.
+2. Protected Routes
+All POST, PUT, DELETE routes require:
+Authorization: Bearer <your-token>
+🔎 Query Filtering
+/properties?location=Colorado&pricePerNight=250&amenities=id1,id2
+/bookings?userId=<user-id>
+/users?username=johnDoe or /users?email=johndoe@email.com
+/hosts?name=Linda
 
+🧪 Testing
+Use Postman or your browser to test endpoints.
+•	Examples:
+•	POST /login
+•	GET /properties
+•	POST /bookings
+🧼 Extras
+All errors logged and reported to Sentry
+Easily deployable (e.g. Render, Railway)
+📚 License
+MIT
 
----
-
-## Features
-- **CRUD Operations** for:
-  - Users
-  - Hosts
-  - Properties
-  - Amenities
-  - Bookings
-  - Reviews
-- **JWT Authentication** for secure access to protected routes.
-- **Query Parameters** for filtering results (e.g., `/properties?location=Malibu`).
-- **Error Handling** with Sentry integration.
-- **Logging** using Winston.
-
----
-
-## Setup Instructions
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm (v9 or higher)
-- Prisma CLI (`npm install -g prisma`)
-
-### Steps
-1. **Clone the Repository**:
-   ``
-   git clone https://github.com/your-username/booking-api.git
-   cd booking-api
-   ``
-1.  **Install Dependencies**:
-   
-   ``
-    npm install
-   ``\
-   \
-3.  **Set Up the Database**:
-
-  Initialize the database and apply migrations:
-        ``
-        npx prisma migrate dev --name init
-        ``
-4.  **Seed the Database**:
-Populate the database with initial data:
-```
-         npm run seed
-```
-4.  **Set Up Environment Variables**:
-
-    -   Create a `.env` file in the root directory and add the following:
-```json
-        DATABASE_URL="file:./dev.db"
-        AUTH_SECRET_KEY="your-secret-key-here"
-        SENTRY_DSN="your-sentry-dsn-here"
-```
-
-
-Running the API
----------------
-
-1.  **Start the Server**:
-
-``
-    npm run dev
-``\
-\
-2.  **Access the API**:\
-    The API will be running at `http://localhost:3000`.
-
-* * * * *
-
-Testing Endpoints
------------------
-
-You can test the API using **Postman** or any HTTP client like **curl** or **Insomnia**.
-
-### Example Requests
-
-#### 1\. **Login**
-
--   **Endpoint**: `POST /login`
-
--   **Request Body**:
-
-  
-```json
-    {
-      "username": "jdoe",
-      "password": "password123"
-    }
-```
--   **Response**:
-
-```json
-
-    {
-      "token": "your-jwt-token-here"
-    }
-```
-#### 2\. **Get All Properties**
-
--   **Endpoint**: `GET /properties`
-
--   **Headers**:
-
-```json
-    {
-      "Authorization": "Bearer your-jwt-token-here"
-    }
-```
--   **Response**:
-  
-```json
-    [
-      {
-        "id": "g9012345-67ef-0123-4567-89abcdef0123",
-        "title": "Cozy Mountain Retreat",
-        "description": "Experience tranquility in our cozy cabin situated on a serene mountain peak.",
-        "location": "Rocky Mountains, Colorado",
-        "pricePerNight": 120.5,
-        "bedroomCount": 3,
-        "bathRoomCount": 2,
-        "maxGuestCount": 5,
-        "hostId": "f1234567-89ab-cdef-0123-456789abcdef",
-        "rating": 5
-      }
-    ]
-```
-#### 3\. **Create a Booking**
-
--   **Endpoint**: `POST /bookings`
-
--   **Headers**:
-```json
-    {
-      "Authorization": "Bearer your-jwt-token-here"
-    }
-```
--   **Request Body**:
-```json
-    {
-      "userId": "a1234567-89ab-cdef-0123-456789abcdef",
-      "propertyId": "g9012345-67ef-0123-4567-89abcdef0123",
-      "checkinDate": "2023-12-01T14:00:00.000Z",
-      "checkoutDate": "2023-12-10T10:00:00.000Z",
-      "numberOfGuests": 2,
-      "totalPrice": 500.0,
-      "bookingStatus": "confirmed"
-    }
-```
--   **Response**:
-```json
-    {
-      "id": "f0123456-78ab-cdef-0123-456789abcdef",
-      "userId": "a1234567-89ab-cdef-0123-456789abcdef",
-      "propertyId": "g9012345-67ef-0123-4567-89abcdef0123",
-      "checkinDate": "2023-12-01T14:00:00.000Z",
-      "checkoutDate": "2023-12-10T10:00:00.000Z",
-      "numberOfGuests": 2,
-      "totalPrice": 500.0,
-      "bookingStatus": "confirmed"
-    }
-```
-* * * * *
-
-API Documentation
------------------
-
-The API documentation is available in the `openapi.yaml` file. You can use tools like **Swagger UI** or **Postman** to visualize and interact with the API.
