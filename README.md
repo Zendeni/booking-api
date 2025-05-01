@@ -1,136 +1,132 @@
 # 🏡 Booking API
 
-A RESTful backend API for a property booking platform. Built with **Node.js**, **Express**, **Prisma**, and **SQLite**, featuring full CRUD, JWT authentication, query filtering, and Sentry-powered error tracking.
+A RESTful backend for a property-booking platform, built with **Node.js**, **Express**, **Prisma**, and **SQLite**.  
+It offers full CRUD, JWT authentication, Postman-driven test suites, and Sentry-powered error tracking.
 
 ---
 
 ## 🚀 Features
 
-- 🔐 JWT Authentication  
+- 🔐 JWT authentication  
 - 🧾 CRUD for Users, Hosts, Properties, Bookings, Reviews, Amenities  
-- 🔍 Query filtering via query parameters  
-- ✅ Status codes & validation  
-- 📦 Seeded data using JSON files  
-- ⚠️ Global error handling with Sentry  
+- 🔍 Query filtering via URL parameters  
+- ✅ Solid status-code + input validation  
+- 📦 Seeded demo data (`npm run db:reset`)  
+- ⚠️ Global error reporting with Sentry  
+- 🧪 Positive & negative Postman collections (`npm test`)
 
 ---
 
-## 📁 Project Structure
+## 📁 Project structure
 
     src/
-    ├── controllers/         # Business logic layer
-    ├── middleware/          # Auth and error handling
-    ├── prisma/              # Prisma schema + client
-    ├── routes/              # Express routes
-    ├── services/            # Prisma DB interactions
-    ├── data/                # Seed data (JSON)
-    └── index.js             # Entry point
+    ├── controllers/     # Route handlers
+    ├── middleware/      # Auth, error, logging
+    ├── prisma/          # Prisma schema & client
+    ├── routes/          # Express routers
+    ├── services/        # DB interaction layer
+    ├── data/            # JSON seed files
+    └── index.js         # Entry point
 
 ---
 
-## 🔧 Tech Stack
+## 🔧 Tech stack
 
-- Node.js  
-- Express  
-- Prisma ORM  
-- SQLite (development DB)  
-- JWT (auth)  
-- Sentry (error tracking)  
-- Postman (for API testing)  
-
----
-
-## ✅ Setup & Run
-
-1. Install dependencies:  
-   `npm install`
-
-2. Configure environment variables:  
-   Create a `.env` file in the root directory with:
-```
-DATABASE_URL="file:./dev.db"
-JWT_SECRET=supersecretkey
-SENTRY_DSN=https://examplePublicKey@o0.ingest.sentry.io/0
-```
-3. Run Prisma migrations:
-``` 
-npx prisma generate --schema=src/prisma/schema.prisma
-
-npm run db:reset
-
-
-Seed the database:  
-npm run seed
-
-Start the server:  
-node src/index.js
-
-npm run dev
-```
----
-
-## 🔐 Authentication
-
-1. **Login**  
-   `POST /login`  
-   Returns a JWT token if credentials match.
-
-2. **Protected Routes**  
-   All `POST`, `PUT`, and `DELETE` routes require the following header:  
-   `Authorization: Bearer <your-token>`
+| Layer   | Tool            |
+|---------|-----------------|
+| Runtime | Node.js 20 LTS  |
+| Server  | Express         |
+| ORM     | Prisma          |
+| DB      | SQLite (dev)    |
+| Auth    | JSON Web Token  |
+| Errors  | Sentry          |
+| Tests   | Newman/Postman  |
 
 ---
 
-## 🔎 Query Filtering
+## 🛠️ Quick start
 
-Examples of query parameters:
+> **Two-terminal workflow**  
+> *Terminal 1* → DB reset + server  *Terminal 2* → test suites
 
-- `/properties?location=Colorado&pricePerNight=250&amenities=id1,id2`  
-- `/bookings?userId=<user-id>`  
-- `/users?username=johnDoe`  
-- `/users?email=johndoe@email.com`  
-- `/hosts?name=Linda`
+### 1 Install dependencies
+
+    npm install
+
+### 2 Configure environment variables
+
+Create a **.env** file in the project root:
+
+    DATABASE_URL="file:./dev.db"
+    JWT_SECRET=supersecretkey
+    SENTRY_DSN=https://examplePublicKey@o0.ingest.sentry.io/0
+
+### 3 Terminal 1 — reset & seed the database
+
+    npm run db:reset
+
+The script
+
+1. Drops/creates **dev.db**  
+2. Pushes the current Prisma schema  
+3. Reseeds all demo data  
+4. Prints a ready-to-use **JWT token**, e.g.  
+   `🧪 TEST TOKEN for Postman: eyJhbGciOiJIUzI1NiIsInR...`
+
+### 4 Add the token to Postman
+
+Open `postman/environments/Local.postman_environment.json` and paste the token into the `token` variable (or create a Postman global variable).
+
+### 5 Start the dev server (still Terminal 1)
+
+    npm run dev          # http://localhost:3000
+
+### 6 Terminal 2 — run all Postman tests
+
+    npm test
+
+You should see **0 failed assertions**.
 
 ---
 
-## 🧪 Testing
+## 🔐 Authentication flow
 
-Use Postman or your browser to test endpoints.
+| Step | Endpoint        | Notes                                              |
+|------|-----------------|----------------------------------------------------|
+| 1    | POST `/login`   | Body `{"email":"…","password":"…"}` → returns JWT   |
+| 2    | any protected   | Add header `Authorization: Bearer <token>`         |
 
-Example requests:
+---
 
-- `POST /login`  
-- `GET /properties`  
-- `POST /bookings`
+## 🔎 Query-filter examples
 
-## Or with curl
-```
-Login (get a token)
-curl -X POST http://localhost:3000/login -H "Content-Type: application/json" -d "{"email":"johndoe@email.com", "password":"johnDoe123"}"
+    /properties?location=Colorado&pricePerNight=250&amenities=a1,b3
+    /bookings?userId=<uuid>
+    /users?username=johnDoe
+    /users?email=john@example.com
+    /hosts?name=Linda
 
-Get all properties
-curl http://localhost:3000/properties
+---
 
-Filter properties by location
-curl "http://localhost:3000/properties?location=Colorado"
+## 🧪 Manual testing with curl
 
-Filter bookings by userId
-curl "http://localhost:3000/bookings?userId=f1234567-89ab-cdef-0123-456789abcdef"
+    # Login – get a token
+    curl -X POST http://localhost:3000/login \
+         -H "Content-Type: application/json" \
+         -d '{"email":"john@example.com","password":"johnDoe123"}'
 
-Filter users
-curl "http://localhost:3000/users?username=johnDoe"
-curl "http://localhost:3000/users?email=johndoe@email.com"
+    # All properties
+    curl http://localhost:3000/properties
 
-Filter hosts
-curl "http://localhost:3000/hosts?name=Linda"
-```
+    # Filter by location
+    curl "http://localhost:3000/properties?location=Colorado"
 
 ---
 
 ## 🧼 Extras
 
-- All errors are logged and reported to Sentry  
-- Easily deployable (e.g. Render, Railway)
+* Centralised error handler logs to console **and** Sentry  
+* Deploy-ready on Render, Railway, Fly.io – just replace `DATABASE_URL`
 
 ---
 
